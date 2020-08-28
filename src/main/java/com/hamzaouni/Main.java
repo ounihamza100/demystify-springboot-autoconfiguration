@@ -3,21 +3,24 @@ package com.hamzaouni;
 import org.apache.catalina.Context;
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.startup.Tomcat;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 public class Main {
 
-    public static void main(String[] args) throws LifecycleException {
 
-        final Tomcat tomcat = new Tomcat();
-        tomcat.setPort(8089);
+    @Configuration
+    public static class MyAppConfig {
+        @Bean
+        public TomcatLauncher tomcatLauncher(){
+            return new TomcatLauncher();
+        }
+    }
+    public static void main(String[] args) {
 
-        Context context = tomcat.addContext("", null);
-        Tomcat.addServlet(context, "helloServlet", new HelloServlet());
-        context.addServletMappingDecoded("/","helloServlet");
+         new AnnotationConfigApplicationContext(MyAppConfig.class);
 
-        tomcat.start();
-
-        new Thread(() -> tomcat.getServer().await()).start();
     }
 }
 
