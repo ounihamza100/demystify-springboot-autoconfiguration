@@ -4,10 +4,14 @@ import org.apache.catalina.Context;
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.startup.Tomcat;
 
+import javax.annotation.PostConstruct;
+
 /**
  * @author Hamza Ouni
  */
 public class TomcatLauncher {
+
+    @PostConstruct
     public void launch()  throws LifecycleException {
         Tomcat tomcat = new Tomcat();
         tomcat.setPort(8089);

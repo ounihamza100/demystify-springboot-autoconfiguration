@@ -7,9 +7,12 @@ import org.springframework.core.type.AnnotatedTypeMetadata;
 /**
  * @author Hamza Ouni
  */
-public class DataSourcePropertiesSet implements Condition {
+public class DataSourcePropertiesSetCondition implements Condition {
     @Override
     public boolean matches(ConditionContext conditionContext, AnnotatedTypeMetadata annotatedTypeMetadata) {
-        return false;
+        //we can also check values
+       return  conditionContext.getEnvironment().containsProperty("spring.datasource.url")
+          &&  conditionContext.getEnvironment().containsProperty("spring.datasource.driver-class-name") ;
+
     }
 }
